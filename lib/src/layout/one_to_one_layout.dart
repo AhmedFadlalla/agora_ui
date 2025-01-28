@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class OneToOneLayout extends StatefulWidget {
   final AgoraClient client;
+  final bool useFlutterTexture;
 
   /// Widget that will be displayed when the local or remote user has disabled it's video.
   final Widget? disabledVideoWidget;
@@ -23,6 +24,7 @@ class OneToOneLayout extends StatefulWidget {
     required this.client,
     this.disabledVideoWidget = const DisabledVideoWidget(),
     this.showAVState,
+    this.useFlutterTexture=false,
     this.enableHostControl,
     this.renderModeType = RenderModeType.renderModeHidden,
   });
@@ -39,17 +41,22 @@ class _OneToOneLayoutState extends State<OneToOneLayout> {
         ? AgoraVideoView(
             controller: VideoViewController(
               rtcEngine: widget.client.sessionController.value.engine!,
+              useFlutterTexture: widget.useFlutterTexture,
               canvas: const VideoCanvas(
                 uid: 0,
                 sourceType: VideoSourceType.videoSourceScreen,
               ),
             ),
+
+
           )
         : AgoraVideoView(
             controller: VideoViewController(
               rtcEngine: widget.client.sessionController.value.engine!,
               canvas: VideoCanvas(uid: 0, renderMode: widget.renderModeType),
+              useFlutterTexture: widget.useFlutterTexture
             ),
+
           );
   }
 
@@ -58,6 +65,7 @@ class _OneToOneLayoutState extends State<OneToOneLayout> {
       controller: VideoViewController.remote(
         rtcEngine: widget.client.sessionController.value.engine!,
         canvas: VideoCanvas(uid: uid, renderMode: widget.renderModeType),
+        useFlutterTexture: widget.useFlutterTexture,
         connection: RtcConnection(
           channelId:
               widget.client.sessionController.value.connectionData!.channelName,
