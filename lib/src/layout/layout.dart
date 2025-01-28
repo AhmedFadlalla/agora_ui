@@ -29,6 +29,7 @@ class AgoraVideoViewer extends StatefulWidget {
 
   /// Widget that will be displayed when the local or remote user has disabled it's video.
   final Widget disabledVideoWidget;
+  final bool useFlutterTexture;
 
   /// Display the camera and microphone status of a user. This feature is only available in the [Layout.floating]
   final bool showAVState;
@@ -46,6 +47,7 @@ class AgoraVideoViewer extends StatefulWidget {
     required this.client,
     this.layoutType = Layout.grid,
     this.floatingLayoutContainerHeight,
+    this.useFlutterTexture=false,
     this.floatingLayoutContainerWidth,
     this.floatingLayoutMainViewPadding = const EdgeInsets.fromLTRB(3, 0, 3, 3),
     this.floatingLayoutSubViewPadding = const EdgeInsets.fromLTRB(3, 3, 0, 3),
@@ -95,6 +97,7 @@ class _AgoraVideoViewerState extends State<AgoraVideoViewer> {
           client: widget.client,
           disabledVideoWidget: widget.disabledVideoWidget,
           renderModeType: widget.renderModeType,
+          useFlutterTexture: widget.useFlutterTexture,
         );
       default:
         return FloatingLayout(
